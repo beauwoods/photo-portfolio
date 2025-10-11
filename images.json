@@ -1,0 +1,43 @@
+[
+  {
+    "path": "images/sample1.svg",
+    "title": "Red Circle Sunset",
+    "tags": [
+      "abstract",
+      "geometric",
+      "red"
+    ]
+  },
+  {
+    "path": "images/sample2.svg",
+    "title": "Blue Square Composition",
+    "tags": [
+      "abstract",
+      "geometric",
+      "blue"
+    ]
+  },
+  {
+    "path": "images/sample3.svg",
+    "title": "Golden Triangle Landscape",
+    "tags": [
+      "abstract",
+      "landscape",
+      "golden"
+    ]
+  },
+  {
+    "path": "images/sample4.svg",
+    "title": "Purple Ellipse Portrait",
+    "tags": [
+      "abstract",
+      "portrait",
+      "purple"
+    ]
+  },
+  {
+    "path": "images/sample5.svg",
+    "title": "Sample5",
+    "tags": []
+  }
+]
