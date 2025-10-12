@@ -238,9 +238,9 @@
     </div>
 
     <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" id="lightbox-close">&times;</button>
-        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&lsaquo;</button>
-        <button class="lightbox-nav lightbox-next" id="lightbox-next">&rsaquo;</button>
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&lsaquo;</button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&rsaquo;</button>
         <div class="lightbox-content">
             <img class="lightbox-image" id="lightbox-image" src="" alt="">
             <div class="lightbox-info">
@@ -264,7 +264,9 @@
                 if (!response.ok) {
                     throw new Error('images.json not found');
                 }
-                images = await response.json();
+                const data = await response.json();
+                // Handle both old format (array) and new format (object with images key)
+                images = data.images || data;
                 loadMoreImages();
             } catch (error) {
                 console.error('Error loading images:', error);
@@ -321,7 +323,10 @@
                 }
 
                 item.appendChild(img);
-                item.appendChild(info);
+                // Only append info box if it has content (title or tags)
+                if (image.title || (image.tags && image.tags.length > 0)) {
+                    item.appendChild(info);
+                }
                 item.addEventListener('click', () => openLightbox(i));
                 masonry.appendChild(item);
             }
@@ -355,6 +360,8 @@
         // Update lightbox content
         function updateLightbox() {
             const image = images[currentLightboxIndex];
+            const lightboxInfo = document.querySelector('.lightbox-info');
+            
             document.getElementById('lightbox-image').src = image.path;
             document.getElementById('lightbox-title').textContent = image.title || '';
             
@@ -365,6 +372,13 @@
                 ).join('');
             } else {
                 tagsContainer.innerHTML = '';
+            }
+            
+            // Hide lightbox info box if both title and tags are empty
+            if (!image.title && (!image.tags || image.tags.length === 0)) {
+                lightboxInfo.style.display = 'none';
+            } else {
+                lightboxInfo.style.display = 'block';
             }
         }
 
