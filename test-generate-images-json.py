@@ -57,10 +57,18 @@ def test_basic_generation():
             with open(output_path, 'r') as f:
                 data = json.load(f)
             
+            # Handle new format
+            if isinstance(data, dict) and 'images' in data:
+                data = data['images']
+            
             assert len(data) == 3, f"Expected 3 images, got {len(data)}"
             assert data[0]['path'] == 'images/landscape.jpeg', f"Expected landscape.jpeg first, got {data[0]['path']}"
-            assert data[0]['title'] == 'Landscape', f"Title not generated correctly, got {data[0]['title']}"
+            # New images should have empty title (no auto-generation)
+            assert data[0]['title'] == '', f"Title should be empty for new images, got {data[0]['title']}"
             assert data[0]['tags'] == [], "Tags should be empty initially"
+            # Check that 'added' field exists and is a valid ISO 8601 date
+            assert 'added' in data[0], "Missing 'added' field"
+            assert data[0]['added'], "'added' field should not be empty"
             
             print("✓ Test 1 passed: Basic generation works correctly")
         finally:
@@ -92,15 +100,22 @@ def test_metadata_preservation():
             
             # Manually edit the JSON (simulating user edits)
             with open(output_path, 'r') as f:
-                data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format
+            if isinstance(json_data, dict) and 'images' in json_data:
+                data = json_data['images']
+            else:
+                data = json_data
             
             data[0]['title'] = 'My Custom Title'
             data[0]['tags'] = ['nature', 'landscape', 'sunset']
             data[1]['title'] = 'Another Custom Title'
             data[1]['tags'] = ['portrait']
             
+            # Write back in new format
             with open(output_path, 'w') as f:
-                json.dump(data, f, indent=2)
+                json.dump({'images': data}, f, indent=2)
             
             # Add a new image
             Path(os.path.join(images_dir, 'photo3.jpg')).touch()
@@ -110,7 +125,13 @@ def test_metadata_preservation():
             
             # Verify that manual edits are preserved
             with open(output_path, 'r') as f:
-                new_data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format
+            if isinstance(json_data, dict) and 'images' in json_data:
+                new_data = json_data['images']
+            else:
+                new_data = json_data
             
             assert len(new_data) == 3, f"Expected 3 images, got {len(new_data)}"
             
@@ -130,8 +151,12 @@ def test_metadata_preservation():
             assert photo1_data['tags'] == ['nature', 'landscape', 'sunset'], "Tags not preserved"
             assert photo2_data['title'] == 'Another Custom Title', "Title not preserved"
             assert photo2_data['tags'] == ['portrait'], "Tags not preserved"
-            assert photo3_data['title'] == 'Photo3', "New image title not generated"
+            # New images should have empty title (no auto-generation)
+            assert photo3_data['title'] == '', f"New image title should be empty, got {photo3_data['title']}"
             assert photo3_data['tags'] == [], "New image should have empty tags"
+            # Check that all images have 'added' field
+            assert 'added' in photo1_data, "Missing 'added' field in preserved image"
+            assert 'added' in photo3_data, "Missing 'added' field in new image"
             
             print("✓ Test 2 passed: Manual edits are preserved correctly")
         finally:
@@ -159,7 +184,13 @@ def test_empty_directory():
             assert os.path.exists(output_path), "images.json was not created"
             
             with open(output_path, 'r') as f:
-                data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format - should be {"images": []}
+            if isinstance(json_data, dict) and 'images' in json_data:
+                data = json_data['images']
+            else:
+                data = json_data
             
             assert data == [], "Expected empty array for no images"
             
@@ -190,7 +221,14 @@ def test_image_removal():
             generate_images_json('images', 'images.json')
             
             with open(output_path, 'r') as f:
-                data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format
+            if isinstance(json_data, dict) and 'images' in json_data:
+                data = json_data['images']
+            else:
+                data = json_data
+            
             assert len(data) == 3, "Expected 3 images initially"
             
             # Remove one image
@@ -200,7 +238,13 @@ def test_image_removal():
             generate_images_json('images', 'images.json')
             
             with open(output_path, 'r') as f:
-                data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format
+            if isinstance(json_data, dict) and 'images' in json_data:
+                data = json_data['images']
+            else:
+                data = json_data
             
             assert len(data) == 2, f"Expected 2 images after removal, got {len(data)}"
             assert all('photo2.jpg' not in item['path'] for item in data), "Removed image still present"
@@ -242,7 +286,13 @@ def test_supported_extensions():
             generate_images_json('images', 'images.json')
             
             with open(output_path, 'r') as f:
-                data = json.load(f)
+                json_data = json.load(f)
+            
+            # Handle new format
+            if isinstance(json_data, dict) and 'images' in json_data:
+                data = json_data['images']
+            else:
+                data = json_data
             
             # Should only have 5 valid image files
             assert len(data) == 5, f"Expected 5 images, got {len(data)}"

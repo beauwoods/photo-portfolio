@@ -41,21 +41,25 @@ This will:
 Edit `images.json` to add custom titles and tags:
 
 ```json
-[
-  {
-    "path": "images/photo1.jpg",
-    "title": "Beautiful Sunset",
-    "tags": ["nature", "sunset", "landscape"]
-  },
-  {
-    "path": "images/photo2.jpg",
-    "title": "City Lights",
-    "tags": ["urban", "night", "cityscape"]
-  }
-]
+{
+  "images": [
+    {
+      "path": "images/photo1.jpg",
+      "title": "Beautiful Sunset",
+      "tags": ["nature", "sunset", "landscape"],
+      "added": "2025-10-12T10:30:00Z"
+    },
+    {
+      "path": "images/photo2.jpg",
+      "title": "City Lights",
+      "tags": ["urban", "night", "cityscape"],
+      "added": "2025-10-12T10:35:00Z"
+    }
+  ]
+}
 ```
 
-Your custom titles and tags will be preserved when new images are added.
+Your custom titles and tags will be preserved when new images are added. The `added` field is automatically generated with an ISO 8601 timestamp when new images are detected.
 
 ## Testing
 

@@ -7,6 +7,7 @@ Preserves manual edits to titles and tags if images.json already exists.
 import os
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -35,13 +36,20 @@ def load_existing_metadata(json_path: str) -> Dict[str, Dict[str, Any]]:
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 existing_data = json.load(f)
+            
+            # Handle both old format (array) and new format (object with images key)
+            if isinstance(existing_data, dict) and 'images' in existing_data:
+                existing_data = existing_data['images']
+            elif not isinstance(existing_data, list):
+                existing_data = []
                 
             # Create a lookup dictionary by path
             for item in existing_data:
                 path = item.get('path', '')
                 metadata[path] = {
                     'title': item.get('title', ''),
-                    'tags': item.get('tags', [])
+                    'tags': item.get('tags', []),
+                    'added': item.get('added', '')
                 }
         except (json.JSONDecodeError, IOError) as e:
             print(f"Warning: Could not read existing images.json: {e}", file=sys.stderr)
@@ -59,9 +67,9 @@ def generate_images_json(images_dir: str = 'images', output_path: str = 'images.
     
     if not image_files:
         print(f"No images found in {images_dir}/", file=sys.stderr)
-        # Create empty array if no images
+        # Create empty array in new format if no images
         with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump([], f, indent=2)
+            json.dump({"images": []}, f, indent=2)
         return
     
     # Load existing metadata
@@ -77,20 +85,24 @@ def generate_images_json(images_dir: str = 'images', output_path: str = 'images.
             # Preserve manual edits
             title = existing_metadata[relative_path].get('title', '')
             tags = existing_metadata[relative_path].get('tags', [])
+            added = existing_metadata[relative_path].get('added', '')
         else:
-            # Generate default title from filename
-            title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ').title()
+            # New images have empty title (no auto-generation)
+            title = ''
             tags = []
+            # Add ISO 8601 timestamp for new images
+            added = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         
         images_data.append({
             'path': relative_path,
             'title': title,
-            'tags': tags
+            'tags': tags,
+            'added': added
         })
     
-    # Write the updated images.json
+    # Write the updated images.json in new format
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(images_data, f, indent=2, ensure_ascii=False)
+        json.dump({"images": images_data}, f, indent=2, ensure_ascii=False)
     
     print(f"Generated {output_path} with {len(images_data)} images")
     print(f"Preserved metadata for {len([p for p in images_data if p['path'] in existing_metadata])} existing images")
