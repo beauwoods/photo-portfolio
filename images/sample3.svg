@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
-  <rect fill="#27ae60" width="800" height="600"/>
-  <polygon points="400,100 700,500 100,500" fill="#f39c12"/>
-  <text x="400" y="570" font-size="40" text-anchor="middle" fill="white" font-family="Arial">Sample Photo 3</text>
-</svg>
