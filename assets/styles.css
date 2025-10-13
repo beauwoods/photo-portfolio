@@ -402,18 +402,24 @@ body {
 }
 
 .site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 0;
   width: 100%;
   max-width: var(--max-width-4col, 1368px);
-  margin: 32px auto 0 auto;
-  padding: 14px 0 32px 0;
+  margin: 48px auto 0 auto;
+  padding: 24px 16px 16px 16px; /* <-- Left and right padding for buffer */
   color: #bcbcbc;
   background: none;
   font-size: 1em;
-  text-align: center;
   border-top: 1px solid #333;
-  font-weight: 200;
+  text-align: center;
+  box-sizing: border-box;      /* ensures padding is inside max-width */
 }
-.footer-content a {
+.site-footer a {
   color: inherit;
   text-decoration: underline;
 }
