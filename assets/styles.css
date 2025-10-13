@@ -13,6 +13,7 @@ body {
   background: #181818;
   color: #ececec;
   font-family: 'Noto Sans', 'Noto Sans Light', system-ui, sans-serif;
+  font-weight: 200;
   margin: 0;
   min-height: 100vh;
 }
@@ -48,7 +49,7 @@ body {
 .nav-link,
 .nav-filter {
   font-family: 'Noto Sans', 'Noto Sans Light', system-ui, sans-serif;
-  font-size: 1.04em;
+  font-size: 1em;
   color: #ececec;
   background: none;
   border: none;
@@ -152,7 +153,7 @@ body {
     height: 72px;
   }
   .profile-info h1 {
-    font-size: 1.4em;
+    font-size: 1.5em;
   }
   .bio {
     margin: 0;
@@ -192,13 +193,14 @@ body {
   border-radius: 14px;
   overflow: hidden;
   box-sizing: border-box;
-  font-size: 1.08em;
+  font-size: 1em;
   text-align: left;
   display: flex;
   flex-direction: column;
   box-shadow: 0 3px 14px rgba(0,0,0,0.25);
   transition: box-shadow 0.19s;
   cursor: pointer;
+  position: relative;
 }
 .grid-item:hover {
   box-shadow: 0 8px 32px rgba(0,0,0,0.34);
@@ -216,28 +218,139 @@ body {
   background: #222;
   color: #ececec;
   border-radius: 0 0 14px 14px;
-  font-size: 0.99em;
+  font-size: 1em;
 }
 .image-title {
   font-weight: 600;
-  font-size: 1.08em;
+  font-size: 1em;
   margin-bottom: 3px;
   color: #ececec;
 }
 .image-tags {
-  font-size: 0.95em;
+  font-size: 0.75em;
   color: #ececec;
   margin-top: 3px;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 .image-tag {
   display: inline-block;
   background: #222;
   border-radius: 10px;
-  padding: 3px 10px;
-  margin-right: 4px;
-  margin-bottom: 2px;
+  padding: 10px 10px;
+  margin-bottom: 4px;
   color: #ececec;
+}
+/* Top overlay: only appears if title is present */
+.image-overlay-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: rgba(30,32,36,0.62);
+  color: #f4f4f4;
+  backdrop-filter: blur(8px) saturate(1.2);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  padding: 4px 8px 4px 8px;  /* Reduced padding */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  font-weight: 200;
+  min-height: 0; /* Prevents excess height if empty */
+}
+
+/* Bottom overlay: date/location/tags */
+.image-overlay-bottom {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: rgba(30,32,36,0.62);
+  color: #f4f4f4;
+  backdrop-filter: blur(8px) saturate(1.2);
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  padding: 4px 8px 4px 8px; /* Reduced padding */
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Smaller vertical gap between rows */
+  min-height: 0; /* Prevents excess height if empty */
+}
+
+/* Row for date and location: side-by-side, compact */
+.overlay-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;  /* Smaller horizontal gap */
+  align-items: center;
+  flex-wrap: wrap;  /* Allows wrapping on small screens */
+  margin-bottom: 2px; /* Reduce bottom margin */
+}
+.overlay-location {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+  font-size: .75em;
+  font-weight: 200;
+  margin-bottom: 0; /* Remove extra space below tags */
+}
+.overlay-date {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+  font-size: .75em;
+  font-weight: 200;
+  margin: 0;
+}
+/* Tags: inline, compact, and allow wrapping */
+.overlay-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+}
+.tag-chip {
+  color: #ffeb6e;
+  border-radius: 8px;
+  font-size: 0.65em;
+  font-weight: 200;
+  margin-bottom: 2px; /* Slight space for wrapping */
+}
+
+/* SVG icons: compact, vertical-align text */
+.image-overlay-bottom svg,
+.image-overlay-top svg,
+.overlay-row svg {
+  vertical-align: middle;
+  margin-bottom: 1px;
+  width: 14px;
+  height: 14px;
+}
+.overlay-tags svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Mobile: always visible; Desktop: show on hover/focus */
+@media (min-width: 680px) {
+  .image-info-overlay {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .grid-item:hover .image-info-overlay,
+  .grid-item:focus-within .image-info-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 }
 
 /* Responsive grid */
@@ -293,7 +406,7 @@ body {
 }
 .lightbox-date, .lightbox-location {
   color: #ececec;
-  font-size: 0.97em;
+  font-size: 1em;
   margin-bottom: 8px;
 }
 .lightbox-tags {
@@ -303,8 +416,6 @@ body {
   display: inline-block;
   background: #222;
   border-radius: 10px;
-  padding: 3px 10px;
-  margin-right: 5px;
   margin-bottom: 2px;
   color: #ececec;
 }
@@ -312,7 +423,7 @@ body {
   display: block;
   margin-top: 6px;
   color: #7fd6ff;
-  font-size: 1.03em;
+  font-size: 1em;
   text-decoration: underline;
   word-break: break-all;
 }
@@ -347,7 +458,7 @@ body {
   align-items: center;
   color: #9cf;
   text-decoration: none;
-  font-size: 1.07em;
+  font-size: 1em;
   position: relative;
   transition: color 0.18s;
   cursor: pointer;
@@ -374,7 +485,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-size: 0.98em;
+  font-size: 1em;
   z-index: 1;
   pointer-events: none;
   transition: opacity 0.18s;
@@ -391,7 +502,7 @@ body {
   border-radius: 8px;
   padding: 3px 10px;
   margin-left: 12px;
-  font-size: 0.96em;
+  font-size: 1em;
 }
 .cc-license-img {
   height: 31px;
