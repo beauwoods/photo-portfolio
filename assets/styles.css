@@ -11,7 +11,7 @@
 /* Base styles */
 body {
   background: #181818;
-  color: #ececec;
+  color: #f5f5f5;
   font-family: 'Noto Sans', 'Noto Sans Light', system-ui, sans-serif;
   font-weight: 200;
   margin: 0;
@@ -49,8 +49,8 @@ body {
 .nav-link,
 .nav-filter {
   font-family: 'Noto Sans', 'Noto Sans Light', system-ui, sans-serif;
-  font-size: 1em;
-  color: #ececec;
+  font-size: 16px;
+  color: #f5f5f5;
   background: none;
   border: none;
   cursor: pointer;
@@ -61,7 +61,7 @@ body {
 
 .nav-link:hover,
 .nav-filter:hover {
-  color: #6dc7be;
+  color: #aaddff;
 }
 
 .nav-icon {
@@ -117,23 +117,21 @@ body {
 }
 
 .profile-info h1 {
-  font-size: 2em;
+  font-size: 32px;
   font-weight: 400;
   margin: 0;
-  color: #ececec;
+  color: #f5f5f5;
 }
 
 .tagline {
-  font-size: 1.15em;
-  font-weight: 200;
-  color: #ececec;
+  font-size: 18px;
+  color: #f5f5f5;
   margin: 0;
 }
 
 .bio {
-  font-size: 1em;
-  font-weight: 200;
-  color: #bcbcbc;
+  font-size: 16px;
+  color: #f5f5f5;
   margin: auto 24px;
   flex: 2 1 0;
   align-self: flex-start;
@@ -153,7 +151,7 @@ body {
     height: 72px;
   }
   .profile-info h1 {
-    font-size: 1.5em;
+    font-size: 24px;
   }
   .bio {
     margin: 0;
@@ -189,11 +187,11 @@ body {
   width: 320px;
   margin-bottom: 32px;
   background: #222;
-  color: #ececec;
+  color: #f5f5f5;
   border-radius: 14px;
   overflow: hidden;
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: 16px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -216,19 +214,18 @@ body {
 .image-info {
   padding: 12px 16px 8px 16px;
   background: #222;
-  color: #ececec;
+  color: #f5f5f5;
   border-radius: 0 0 14px 14px;
-  font-size: 1em;
+  font-size: 16px;
 }
 .image-title {
-  font-weight: 600;
-  font-size: 1em;
+  font-size: 16px;
   margin-bottom: 3px;
-  color: #ececec;
+  color: #f5f5f5;
 }
 .image-tags {
-  font-size: 0.75em;
-  color: #ececec;
+  font-size: 12px;
+  color: #f5f5f5;
   margin-top: 3px;
   margin-bottom: 3px;
 }
@@ -237,24 +234,23 @@ body {
   background: #222;
   border-radius: 10px;
   padding: 10px 10px;
-  margin-bottom: 4px;
-  color: #ececec;
+  margin-bottom: 3px;
+  color: #f5f5f5;
 }
 /* Top overlay: only appears if title is present */
 .image-overlay-top {
   position: absolute;
   top: 0; left: 0; right: 0;
   background: rgba(30,32,36,0.62);
-  color: #f4f4f4;
+  color: #f5f5f5;
   backdrop-filter: blur(8px) saturate(1.2);
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
-  padding: 4px 8px 4px 8px;  /* Reduced padding */
+  padding: 4px 8px;  /* Reduced padding */
   z-index: 2;
   display: flex;
   align-items: center;
-  font-size: 1em;
-  font-weight: 200;
+  font-size: 16px;
   min-height: 0; /* Prevents excess height if empty */
 }
 
@@ -263,7 +259,7 @@ body {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   background: rgba(30,32,36,0.62);
-  color: #f4f4f4;
+  color: #f5f5f5;
   backdrop-filter: blur(8px) saturate(1.2);
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
@@ -281,10 +277,10 @@ body {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  gap: 10px;  /* Smaller horizontal gap */
+  gap: 10px;
   align-items: center;
   flex-wrap: wrap;  /* Allows wrapping on small screens */
-  margin-bottom: 2px; /* Reduce bottom margin */
+  margin-bottom: 4px;
 }
 .overlay-location {
   display: flex;
@@ -292,10 +288,8 @@ body {
   text-align: right;
   gap: 4px;
   flex-wrap: wrap;
-  margin-top: 2px;
-  font-size: .75em;
-  font-weight: 200;
-  margin-bottom: 0; /* Remove extra space below tags */
+  font-size: 12px;
+  margin: 0; /* Margin handled by .overlay-row gap and margin */
 }
 .overlay-date {
   display: flex;
@@ -303,10 +297,8 @@ body {
   text-align: left;
   gap: 4px;
   flex-wrap: wrap;
-  margin-top: 2px;
-  font-size: .75em;
-  font-weight: 200;
-  margin: 0;
+  font-size: 12px;
+  margin: 0; /* Margin handled by .overlay-row gap and margin */
 }
 /* Tags: inline, compact, and allow wrapping */
 .overlay-tags {
@@ -314,28 +306,26 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 4px;
-  margin: 0;
+  margin: 2px 0;
 }
 .tag-chip {
-  color: #ffeb6e;
-  border-radius: 8px;
-  font-size: 0.65em;
-  font-weight: 200;
-  margin-bottom: 2px; /* Slight space for wrapping */
+  background: rgba(255,255,255,0.15);
+  color: #ffee00;
+  border-radius: 14px;
+  padding: 4px 8px; /* Wider padding */
+  font-size: 12px;
+  margin: 0; /* Margin handled by .overlay-tags gap and margin */
 }
 
 /* SVG icons: compact, vertical-align text */
 .image-overlay-bottom svg,
 .image-overlay-top svg,
-.overlay-row svg {
+.overlay-row svg,
+.overlay-tags svg {
   vertical-align: middle;
   margin-bottom: 1px;
   width: 14px;
   height: 14px;
-}
-.overlay-tags svg {
-  width: 12px;
-  height: 12px;
 }
 
 /* Mobile: always visible; Desktop: show on hover/focus */
@@ -354,163 +344,9 @@ body {
 }
 
 /* Responsive grid */
-@media (max-width: 1376px) { .top-nav, .profile-header, .grid { max-width: 1036px; } .profile-info h1 { font-size: 1.8em; } .tagline { font-size: 1em; } }
+@media (max-width: 1376px) { .top-nav, .profile-header, .grid { max-width: 1036px; } .profile-info h1 { font-size: 20px; } .tagline { font-size: 12px; } }
 @media (max-width: 1036px) { .top-nav, .profile-header, .grid { max-width: 684px; } }
 @media (max-width: 684px) { .top-nav, .profile-header, .grid { max-width: 320px; } }
-
-/* Lightbox styles */
-.lightbox-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.25s;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.lightbox-content {
-  background: none;
-  max-width: 94vw;
-  max-height: 94vh;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  position: relative;
-}
-.lightbox-img {
-  max-width: 900px;
-  max-height: 62vh;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.54);
-  background: #222;
-  margin-bottom: 0;
-}
-.lightbox-info {
-  width: 100%;
-  border-radius: 14px;
-  box-sizing: border-box;
-  padding: 18px 24px;
-  margin-top: 10px;
-  background: #222;
-  color: #ececec;
-}
-.lightbox-title {
-  font-size: 1.25em;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.lightbox-date, .lightbox-location {
-  color: #ececec;
-  font-size: 1em;
-  margin-bottom: 8px;
-}
-.lightbox-tags {
-  margin-bottom: 8px;
-}
-.lightbox-tag {
-  display: inline-block;
-  background: #222;
-  border-radius: 10px;
-  margin-bottom: 2px;
-  color: #ececec;
-}
-.lightbox-link {
-  display: block;
-  margin-top: 6px;
-  color: #7fd6ff;
-  font-size: 1em;
-  text-decoration: underline;
-  word-break: break-all;
-}
-.lightbox-close {
-  position: absolute;
-  top: 10px;
-  right: 18px;
-  color: #ececec;
-  background: #222;
-  border: none;
-  font-size: 2em;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  opacity: 0.85;
-  transition: background 0.18s;
-  z-index: 1011;
-}
-.lightbox-close:hover {
-  background: #444;
-}
-.lightbox-utils {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 12px;
-  margin-bottom: 0px;
-}
-.lightbox-download {
-  display: flex;
-  align-items: center;
-  color: #9cf;
-  text-decoration: none;
-  font-size: 1em;
-  position: relative;
-  transition: color 0.18s;
-  cursor: pointer;
-}
-.lightbox-download:hover {
-  color: #ececec;
-}
-.icon-download {
-  width: 26px;
-  height: 26px;
-  vertical-align: middle;
-  margin-right: 2px;
-  transition: filter 0.18s;
-}
-.download-label {
-  visibility: hidden;
-  opacity: 0;
-  background: #222;
-  color: #ececec;
-  padding: 3px 9px;
-  border-radius: 7px;
-  position: absolute;
-  left: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  font-size: 1em;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity 0.18s;
-}
-.lightbox-download:hover .download-label {
-  visibility: visible;
-  opacity: 1;
-}
-.lightbox-cc {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #222;
-  border-radius: 8px;
-  padding: 3px 10px;
-  margin-left: 12px;
-  font-size: 1em;
-}
-.cc-license-img {
-  height: 31px;
-  width: 88px;
-  border: none;
-  vertical-align: middle;
-  margin-right: 6px;
-}
 
 .site-footer {
   display: flex;
@@ -523,9 +359,9 @@ body {
   max-width: var(--max-width-4col, 1368px);
   margin: 48px auto 0 auto;
   padding: 24px 16px 16px 16px; /* <-- Left and right padding for buffer */
-  color: #bcbcbc;
+  color: #f5f5f5;
   background: none;
-  font-size: 1em;
+  font-size: 12px;
   border-top: 1px solid #333;
   text-align: center;
   box-sizing: border-box;      /* ensures padding is inside max-width */
@@ -533,4 +369,218 @@ body {
 .site-footer a {
   color: inherit;
   text-decoration: underline;
+}
+
+/* Unsplash-inspired, mobile-first Lightbox Overlays with improved layout and cues */
+
+.lightbox-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  animation: fadeIn 0.25s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Main content is centered, full viewport (no horizontal overflow) */
+.lightbox-content {
+  background: none;
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  border-radius: 18px;
+  gap: 0;
+  margin-top: 68px; /* Ensures close button space */
+  margin-bottom: 32px; /* Space for tapping out below the lightbox */
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Close button: fixed top right, never overlaps */
+.lightbox-close {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  font-size: 2.12px;
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  opacity: 0.8;
+  cursor: pointer;
+  z-index: 1010;
+  padding: 0;
+  transition: opacity 0.18s;
+}
+.lightbox-close:hover, .lightbox-close:focus {
+  opacity: 1;
+}
+
+/* Top overlay - full width, gallery-style font */
+.lightbox-top-overlay {
+  color: #f5f5f5;
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 10px 16px 7px 16px;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  max-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  gap: 9px;
+  box-sizing: border-box;
+  position: relative;
+}
+.lightbox-title {
+  color: #f5f5f5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Image: no rounded corners, max-width 100vw */
+.lightbox-img {
+  display: block;
+  width: auto;
+  max-width: 100vw;
+  max-height: 62vh;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 0;
+  background: #222;
+  object-fit: contain;
+  box-sizing: border-box;
+}
+/* Bottom overlay - full width, no overflow, gallery-style font */
+.lightbox-bottom-overlay {
+  color: #f5f5f5;
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  padding: 10px 16px 12px 16px;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  box-sizing: border-box;
+  position: relative;
+  border-bottom: 2px solid rgba(255,255,255,0.09);
+}
+/* Row for date/location, space-between, wrap */
+.lightbox-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+/* Tags: compact and wrapping */
+.lightbox-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+  align-items: center;
+  color: #f5f5f5;
+}
+
+.lightbox-tags svg {
+  vertical-align: middle;
+  margin-right: 3px;
+  width: 15px;
+  height: 15px;
+}
+
+/* License and view original: flex row, align center, reduce wasted space */
+.lightbox-bottom-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* License: just icon, not stretched */
+.lightbox-license {
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+}
+.cc-license-img {
+  height: 20px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Original link */
+.lightbox-original-link {
+  font-size: 12px;
+  color: #aaddff;
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  margin: 0;
+}
+.lightbox-original-link svg {
+  vertical-align: middle;
+  margin-right: 1px;
+}
+
+/* Visual scroll cue at bottom */
+.lightbox-scroll-cue {
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.13) 80%);
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Desktop tweaks */
+@media (min-width: 680px) {
+  .lightbox-img {
+    max-width: 900px;
+    max-height: 68vh;
+  }
+  .lightbox-content {
+    max-width: 900px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .lightbox-top-overlay,
+  .lightbox-bottom-overlay {
+    padding-left: 28px;
+    padding-right: 28px;
+    font-size: 16px;
+    max-width: 900px;
+  }  
+  .lightbox-close {
+    top: 40px;
+    right: calc(50vw - 450px + 40px);
+  }
 }
