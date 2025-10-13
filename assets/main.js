@@ -11,7 +11,7 @@ function showLightbox(imgObj) {
     const dateObj = new Date(imgObj.added);
     const monthYear = dateObj.toLocaleString('en-US', { month: 'long', year: 'numeric' });
     dateHtml = `
-      <span class="lightbox-date">
+      <span class="image-date">
         <svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="4" width="12" height="10" rx="2" fill="#90ee90"/><path d="M4 2v2M12 2v2" stroke="#90ee90" stroke-width="1.5"/></svg>
         ${monthYear}
       </span>
@@ -21,7 +21,7 @@ function showLightbox(imgObj) {
   let locationHtml = '';
   if (imgObj.location) {
     locationHtml = `
-      <span class="lightbox-location">
+      <span class="image-location">
         <svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 2a5 5 0 0 1 5 5c0 3.5-5 7-5 7S3 10.5 3 7a5 5 0 0 1-5-5zm0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6z" fill="#90ee90"/></svg>
         ${imgObj.location}
       </span>
@@ -31,9 +31,9 @@ function showLightbox(imgObj) {
   let tagsHtml = '';
   if (imgObj.tags && imgObj.tags.length > 0) {
     tagsHtml = `
-      <span class="lightbox-tags">
+      <span class="image-tags">
         <svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 9V2h7l5 5-7 7-5-5z" fill="#ffee00"/></svg>
-        ${imgObj.tags.map(tag => `<span class="tag-chip">${tag}</span>`).join('')}
+        ${imgObj.tags.map(tag => `<span class="image-tag-chip">${tag}</span>`).join('')}
       </span>
     `;
   }
@@ -63,11 +63,11 @@ function showLightbox(imgObj) {
       <div class="lightbox-content">
         <button class="lightbox-close" id="lightbox-close" title="Close">&times;</button>
         <div class="lightbox-top-overlay">
-          <div class="lightbox-title">${displayTitle}</div>
+          <div class="image-title">${displayTitle}</div>
         </div>
         <img class="lightbox-img" src="${imgObj.path}" alt="${displayTitle}">
         <div class="lightbox-bottom-overlay">
-          <div class="lightbox-row">
+          <div class="overlay-row">
             ${dateHtml}
             ${locationHtml}
           </div>
@@ -125,17 +125,17 @@ images.forEach((img, idx) => {
   // --- Overlay code START ---
   // Top overlay (title or filename)
   const topOverlay = document.createElement('div');
-  topOverlay.className = 'image-overlay-top';
+  topOverlay.className = 'gallery-overlay-top';
   const displayTitle = img.title && img.title.trim() ? img.title : img.path.split('/').pop();
   const titleDiv = document.createElement('div');
-  titleDiv.className = 'overlay-title';
+  titleDiv.className = 'image-title';
   titleDiv.textContent = displayTitle;
   topOverlay.appendChild(titleDiv);
   div.appendChild(topOverlay);
 
   // Bottom overlay (date/location/tags)
   const bottomOverlay = document.createElement('div');
-  bottomOverlay.className = 'image-overlay-bottom';
+  bottomOverlay.className = 'gallery-overlay-bottom';
 
   const rowDiv = document.createElement('div');
   rowDiv.className = 'overlay-row';
@@ -143,13 +143,13 @@ images.forEach((img, idx) => {
     const dateObj = new Date(img.added);
     const monthYear = dateObj.toLocaleString('en-US', { month: 'long', year: 'numeric' });
     const dateDiv = document.createElement('span');
-    dateDiv.className = 'overlay-date';
+    dateDiv.className = 'image-date';
     dateDiv.innerHTML = `<svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="4" width="12" height="10" rx="2" fill="#90ee90"/><path d="M4 2v2M12 2v2" stroke="#90ee90" stroke-width="1.5"/></svg> ${monthYear}`;
     rowDiv.appendChild(dateDiv);
   }
   if (img.location) {
     const locationDiv = document.createElement('span');
-    locationDiv.className = 'overlay-location';
+    locationDiv.className = 'image-location';
     locationDiv.innerHTML = `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 2a5 5 0 0 1 5 5c0 3.5-5 7-5 7S3 10.5 3 7a5 5 0 0 1-5-5zm0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6z" fill="#90ee90"/></svg> ${img.location}`;
     rowDiv.appendChild(locationDiv);
   }
@@ -158,11 +158,11 @@ images.forEach((img, idx) => {
   // Tags (below date/location row)
   if (img.tags && img.tags.length > 0) {
     const tagsDiv = document.createElement('span');
-    tagsDiv.className = 'overlay-tags';
+    tagsDiv.className = 'image-tags';
     tagsDiv.innerHTML = `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 9V2h7l5 5-7 7-5-5z" fill="#ffee00"/></svg>`;
     img.tags.forEach(tag => {
       const tagSpan = document.createElement('span');
-      tagSpan.className = 'tag-chip';
+      tagSpan.className = 'image-tag-chip';
       tagSpan.textContent = tag;
       tagsDiv.appendChild(tagSpan);
     });
