@@ -5,32 +5,65 @@
   <title>meanderingwoods - Photo Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/styles.css">
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
   <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 </head>
 <body>
-  <header>
-    <div class="header-main">
-      <img src="images/profile.jpg" alt="meanderingwoods portrait" class="header-portrait" />
-      <h1>meanderingwoods</h1>
-      <p class="tagline">...dedicated to taking the scenic route.</p>
-      <p class="bio">
-        <!-- You can fill this in later! Example: -->
-        <span class="bio-placeholder">
-          Documenting moments as I wander, with curiosity and intention.
-        </span>
-      </p>
-      <div class="header-links">
-        <a href="https://instagram.com/yourinsta" target="_blank" class="social-link">Instagram</a>
-        <a href="https://flickr.com/photos/yourflickr" target="_blank" class="social-link">Flickr</a>
-      </div>
+<!-- Navigation Bar -->
+<nav class="top-nav">
+  <div class="nav-left">
+    <a href="/blog" class="nav-link">Blog</a>
+    <button class="nav-filter" aria-label="Filter photos">Filter</button>
+  </div>
+  <div class="nav-right">
+    <a href="https://instagram.com/yourinsta" class="nav-icon" aria-label="Instagram">
+      <!-- Instagram SVG -->
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 1.5h-8.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm-4.25 3.25a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5.25.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+      </svg>
+    </a>
+    <a href="https://flickr.com/photos/yourflickr" class="nav-icon" aria-label="Flickr">
+      <!-- Flickr SVG -->
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <circle cx="7" cy="12" r="4" />
+        <circle cx="17" cy="12" r="4" />
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<!-- Header Section -->
+<header class="profile-header">
+    <img src="assets/beau_headshot.jpg" alt="Beau Woods profile" class="profile-pic" id="profile-pic" tabindex="0" aria-label="Show QR code" />
+
+    <div id="qr-popup" style="
+    display:none; position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background:rgba(0,0,0,0.65); z-index:9999; justify-content:center; align-items:center;">
+    <div id="qr-inner" style="
+        background:#222; padding:32px 24px; border-radius:18px; box-shadow:0 4px 32px #0008; text-align:center;">
+        <img src="assets/qr-code.png" alt="QR code for meanderingwoods.com" width="180" height="180"/>
     </div>
-  </header>
+    </div>
+  <div class="profile-info">
+    <h1>meanderingwoods</h1>
+    <p class="tagline">...dedicated to taking the scenic route.</p>
+  </div>
+  <p class="bio">
+    Beau Woods is a cybersecurity researcher and amateur photographer, capturing life one footprint at a time. To contact Beau, use your Internet sleuthing skills – I'm sure you'll figure it out. ;)
+  </p>
+</header>
+
+<!-- Gallery below -->
 <div class="gallery-container">
   <div class="grid" id="grid"></div>
 </div>
 <div id="lightbox" style="display:none;"></div>
-<script src="main.js"></script>
+<script src="assets/main.js"></script>
+<footer class="site-footer">
+  <div class="footer-content">
+    &copy; <a href="https://meanderingwoods.com/" style="color:inherit;text-decoration:underline;">meanderingwoods.com</a> 2025 &mdash; Photos licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" style="color:inherit;text-decoration:underline;">CC BY-NC-SA 4.0</a>
+  </div>
+</footer>
 </body>
 </html>
