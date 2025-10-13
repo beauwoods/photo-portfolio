@@ -49,7 +49,10 @@ def load_existing_metadata(json_path: str) -> Dict[str, Dict[str, Any]]:
                 metadata[path] = {
                     'title': item.get('title', ''),
                     'tags': item.get('tags', []),
-                    'added': item.get('added', '')
+                    'added': item.get('added', ''),
+                    'taken': item.get('taken', ''),
+                    'original_link': item.get('original_link', ''),
+                    'location': item.get('location', '')
                 }
         except (json.JSONDecodeError, IOError) as e:
             print(f"Warning: Could not read existing images.json: {e}", file=sys.stderr)
