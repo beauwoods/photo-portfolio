@@ -118,6 +118,30 @@ Works on all modern browsers:
 - `←` / `→`: Navigate between images
 - `Esc`: Close lightbox
 
+## TO DO
+
+### Phase 1: Header Redesign
+- [ ] Research minimalist headers for inspiration
+- [ ] Decide on new header elements (layout, typography, accent, etc)
+- [ ] Implement improved header
+
+### Phase 2: Info Overlays & Lightbox
+- [ ] Research gallery/lightbox overlay designs
+- [ ] Redesign gallery info overlays
+- [ ] Revamp lightbox info display
+
+### Phase 3: Tag Filtering
+- [ ] Explore filtering UI styles (tag cloud, sidebar, etc)
+- [ ] Design tag filter component
+- [ ] Implement tag-based filtering
+
+---
+
+*Each phase should be tracked as a GitHub issue for discussion and implementation:*
+- [Phase 1: Header Redesign](https://github.com/beauwoods/photo-portfolio/issues/4)
+- [Phase 2: Info Overlay & Lightbox Revamp](https://github.com/beauwoods/photo-portfolio/issues/5)
+- [Phase 3: Tag Filtering UX](https://github.com/beauwoods/photo-portfolio/issues/6)
+
 ## Technology
 
 Built with plain HTML, CSS, and JavaScript - no frameworks or dependencies required!
