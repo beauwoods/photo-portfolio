@@ -24,3 +24,9 @@ __pycache__/
 *$py.class
 *.so
 .Python
+
+# Additional files to ignore
+Timeline.json
+GPX_Output/
+geotags.json
+mapstogpx.py

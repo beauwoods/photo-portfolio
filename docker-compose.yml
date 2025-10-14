@@ -10,6 +10,6 @@ services:
       - PYTHONUNBUFFERED=1
     command: >
       sh -c "
-        pip install Pillow geopy &&
-        python index_images.py
+        pip install Pillow geopy piexif gpxpy pandas &&
+        python index_and_enrich.py
       "

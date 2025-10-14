@@ -559,10 +559,10 @@ svg {
 }
 
 @media (min-width: 680px) {
-  .lightbox-img { max-width: 900px; max-height: 68vh; }
-  .lightbox-content { max-width: 900px; padding-left: 0; padding-right: 0; }
+  .lightbox-img { max-width: 1200px; max-height: 68vh; }
+  .lightbox-content { max-width: inherit; padding-left: 0; padding-right: 0; }
   .lightbox-top-overlay,
-  .lightbox-bottom-overlay { padding-left: 28px; padding-right: 28px; font-size: var(--font-size-base); max-width: 900px; }
+  .lightbox-bottom-overlay { padding-left: 28px; padding-right: 28px; font-size: var(--font-size-base); max-width: inherit; }
 }
 
 /* =============================== */
