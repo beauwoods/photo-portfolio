@@ -77,6 +77,14 @@ def get_git_added_date(image_path):
     except Exception:
         return ""
 
+def exif_to_iso8601(dtstr):
+    # EXIF format: 'YYYY:MM:DD HH:MM:SS'
+    try:
+        dt = datetime.strptime(dtstr, "%Y:%m:%d %H:%M:%S")
+        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return ""
+
 # Load existing images.json if it exists
 if os.path.exists(JSON_PATH):
     with open(JSON_PATH, "r", encoding="utf-8") as f:
@@ -132,9 +140,10 @@ for path in all_image_files:
     # Handle date taken
     if not img.get("taken"):
         if date_taken:
-            img["taken"] = date_taken
+            iso_taken = exif_to_iso8601(date_taken)
+            img["taken"] = iso_taken
             actions["updated_taken"] += 1
-            detailed_actions.append(f"Set date taken for {path} to {date_taken}")
+            detailed_actions.append(f"Set date taken for {path} to {iso_taken}")
         else:
             git_date = get_git_added_date(path)
             if git_date:
@@ -172,10 +181,14 @@ for path, img in images_by_path.items():
         detailed_actions.append(f"Retained metadata for missing image: {path}")
 
 # Sort images by date taken (most recent first), then by added date
-def sort_key(img):
-    return img.get("taken") or img.get("added") or ""
-
-updated_images.sort(key=sort_key, reverse=True)
+with_dates = [img for img in updated_images if img.get("taken") and img.get("taken").strip()]
+without_dates = [img for img in updated_images if not (img.get("taken") and img.get("taken").strip())]
+# Sort with_dates by taken descending
+with_dates.sort(key=lambda img: img["taken"], reverse=True)
+# Optionally sort without_dates by "added" descending
+without_dates.sort(key=lambda img: img.get("added", ""), reverse=True)
+# Concatenate
+updated_images = with_dates + without_dates
 
 with open(JSON_PATH, "w", encoding="utf-8") as f:
     f.write('{\n  "images": [\n')

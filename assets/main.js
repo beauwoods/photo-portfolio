@@ -119,7 +119,7 @@ function renderOverlayBottom(context, imgObj) {
   const bottom = document.createElement('div');
   bottom.className = context === 'gallery' ? 'gallery-overlay-bottom' : 'lightbox-bottom-overlay';
 
-  let html = createOverlayRow(imgObj.added, imgObj.location);
+  let html = createOverlayRow(imgObj.date_taken, imgObj.location);
   html += createTagList(imgObj.tags);
 
   // For lightbox, add meta row
