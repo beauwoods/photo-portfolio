@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate images.json
         run: |
-          python index_images.py
+          python index_and_enrich.py
 
       - name: Check for changes
         id: check_changes
