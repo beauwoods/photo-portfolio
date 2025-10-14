@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  image_indexer:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "
+        pip install Pillow geopy &&
+        python index_images.py
+      "

@@ -62,17 +62,23 @@ function renderGalleryImage(imgObj) {
   div.className = 'grid-item';
   div.tabIndex = 0;
 
-  // Image
   const imageElem = document.createElement('img');
   imageElem.src = imgObj.path;
   imageElem.alt = getImageDisplayTitle(imgObj);
-  div.appendChild(imageElem);
 
-  // Overlays
+  if (imgObj.width && imgObj.height) {
+    imageElem.width = imgObj.width;
+    imageElem.height = imgObj.height;
+    imageElem.setAttribute('width', imgObj.width);
+    imageElem.setAttribute('height', imgObj.height);
+    imageElem.loading = 'lazy'; // Enable native lazy loading
+    div.style.aspectRatio = `${imgObj.width}/${imgObj.height}`; // Optional
+  }
+
+  div.appendChild(imageElem);
   div.appendChild(renderOverlayTop('gallery', imgObj));
   div.appendChild(renderOverlayBottom('gallery', imgObj));
 
-  // Events
   div.onclick = () => showLightbox(imgObj);
   div.onkeydown = (e) => {
     if (e.key === "Enter" || e.key === " ") showLightbox(imgObj);

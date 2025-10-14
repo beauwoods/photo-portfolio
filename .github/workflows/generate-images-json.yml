@@ -4,8 +4,15 @@ on:
   push:
     branches:
       - main
+    # Only trigger on new/changed photograph files in images/
     paths:
-      - 'images/**'
+      - 'images/**/*.jpg'
+      - 'images/**/*.jpeg'
+      - 'images/**/*.png'
+      - 'images/**/*.gif'
+      - 'images/**/*.webp'
+      - 'images/**/*.bmp'
+      - 'images/**/*.tiff'
   workflow_dispatch:
 
 permissions:
@@ -14,27 +21,30 @@ permissions:
 jobs:
   generate-images-json:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      
+
+      - name: Install dependencies
+        run: pip install Pillow geopy
+
       - name: Generate images.json
         run: |
-          python generate-images-json.py
-      
+          python index_images.py
+
       - name: Check for changes
         id: check_changes
         run: |
           git diff --exit-code images.json || echo "changed=true" >> $GITHUB_OUTPUT
-      
+
       - name: Commit and push changes
         if: steps.check_changes.outputs.changed == 'true'
         run: |
