@@ -5,22 +5,24 @@
 :root {
   /* Colors */
   --color-bg: #222;
-  --color-overlay-bg: rgba(30,32,36,0.66);
-  --color-overlay-blur: blur(12px) saturate(1.2);
   --color-text: #f5f5f5;
-  --color-accent: #8fd6ff;
-  --color-accent-soft: #aaddff;
-  --color-tag-bg: rgba(255,255,255,0.15);
-  --color-tag-text: #ffee00;
-  --color-date: #90ee90;
-  --color-link: #aaddff;
-  --color-link-hover: #6dc7be;
+  --color-overlay-blur: blur(12px) saturate(1.2);
+  --color-overlay-opacity: 0.75; /* Opacity for overlay backgrounds, using 'rgb(from var(--color-bg) r g b / var(--color-overlay-opacity))' */
+  --color-chip-opacity: 0.33;  /* Opacity for chip backgrounds, using 'rgb(from var(--color-*-text) r g b / var(--color-chip-opacity))' (see colors below) */
   --color-border: #333;
 
+  /* Complementary colors from the 'Square' palette at https://www.figma.com/color-wheel/ */
+  --color-tag-text: #FFEE00;
+  --color-place-text: #00FF6F;
+  --color-date-text: #FF0091;
+  --color-link-text: #0011FF;
+  
   /* Corners */
   --radius-base: 14px;
   --radius-overlay: 18px;
-  --radius-tag: 14px;
+  --radius-svg: 14px;
+  --radius-chip: 14px;
+  --radius-button: 14px;
   --radius-profile: 50%;
 
   /* Spacing */
@@ -35,7 +37,8 @@
   --font-size-base: 16px;
   --font-size-title: 32px;
   --font-size-subtitle: 18px;
-  --font-size-tag: 12px;
+  --font-size-chip: 12px;
+  --font-size-button: 14px;
   --font-size-footer: 12px;
 
   /* Max Widths */
@@ -63,9 +66,6 @@ a {
   color: var(--color-link);
   text-decoration: underline;
   transition: color 0.18s;
-}
-a:hover, a:focus {
-  color: var(--color-link-hover);
 }
 
 button {
@@ -126,8 +126,7 @@ svg {
   gap: 18px;
 }
 
-.nav-link,
-.nav-filter {
+.nav-link {
   font-size: 16px;
   color: var(--color-text);
   background: none;
@@ -136,10 +135,6 @@ svg {
   padding: 0 6px;
   text-decoration: none;
   transition: color 0.18s;
-}
-.nav-link:hover,
-.nav-filter:hover {
-  color: var(--color-accent-soft);
 }
 
 .nav-icon {
@@ -151,17 +146,11 @@ svg {
   border-radius: var(--radius-profile);
   transition: background 0.18s;
 }
-.nav-icon:hover {
-  background: var(--color-bg);
-}
 .nav-icon svg {
   width: 100%;
   height: 100%;
   fill: var(--color-text);
   transition: fill 0.18s;
-}
-.nav-icon:hover svg {
-  fill: var(--color-link-hover);
 }
 
 .profile-header {
@@ -215,7 +204,7 @@ svg {
 /* Masonry Grid / Gallery          */
 /* =============================== */
 
-.gallery-container {
+.gallery-container{
   max-width: 1376px;
   margin: auto;
   display: flex;
@@ -266,23 +255,56 @@ svg {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.image-date,
-.image-location,
-.image-tags {
+.row-tags, 
+.row-date, 
+.row-place {
   display: flex;
   align-items: center;
-  font-size: var(--font-size-tag);
   gap: 4px;
   margin: 0;
 }
-.image-tag-chip {
-  background: var(--color-tag-bg);
-  color: var(--color-tag-text);
-  border-radius: var(--radius-tag);
-  padding: 4px 8px;
+.row-tags { color: var(--color-tag-text); flex-wrap: wrap; }
+.row-date { color: var(--color-date-text); }
+.row-place { color: var(--color-place-text); }
+/* See also .chip styles below */
+
+.image-source svg {
+  color: var(--color-text);
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
   margin: 0;
 }
-.overlay-row {
+.image-source svg:hover {
+  color: var(--color-bg);
+  background: var(--color-text);
+  border-radius: var(--radius-svg);
+}
+
+.chip { font-size: var(--font-size-chip); background: rgb(from var(--color-text) r g b / var(--color-chip-opacity)); border-radius: var(--radius-chip); padding: 4px 8px; }
+.chip:hover { background: rgb(from var(--color-text) r g b / calc(var(--color-chip-opacity) + 0.2)); color: var(--color-text); }
+
+.chip-tag { background: rgb(from var(--color-tag-text) r g b / var(--color-chip-opacity)); border-radius: var(--radius-chip); }
+.chip-tag:hover { background: rgb(from var(--color-tag-text) r g b / calc(var(--color-chip-opacity) + 0.2)); color: var(--color-tag-text); }
+.chip-tag.selected { background: rgb(from var(--color-tag-text) r g b / 0.75); color: var(--color-text); }
+.chip-tag.selected:hover { background: rgb(from var(--color-tag-text) r g b / 0.6); color: var(--color-text); }
+
+.chip-place { background: rgb(from var(--color-place-text) r g b / var(--color-chip-opacity)); color: var(--color-place-text); border-radius: var(--radius-chip); }
+.chip-place:hover { background: rgb(from var(--color-place-text) r g b / calc(var(--color-chip-opacity) + 0.2)); color: var(--color-place-text); }
+.chip-place.selected { background: rgb(from var(--color-place-text) r g b / 0.75); color: var(--color-text); }
+.chip-place.selected:hover { background: rgb(from var(--color-place-text) r g b / 0.6); color: var(--color-text); }
+
+.chip-date { background: rgb(from var(--color-date-text) r g b / var(--color-chip-opacity)); color: var(--color-date-text); border-radius: var(--radius-chip); }
+.chip-date:hover { background: rgb(from var(--color-date-text) r g b / calc(var(--color-chip-opacity) + 0.2)); color: var(--color-date-text); }
+.chip-date.selected { background: rgb(from var(--color-date-text) r g b / 0.75); color: var(--color-text); }
+.chip-date.selected:hover { background: rgb(from var(--color-date-text) r g b / 0.6); color: var(--color-text); }
+/* See also .row-* styles above */
+
+.row-timeplace {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -300,7 +322,7 @@ svg {
 .gallery-overlay-top {
   position: absolute;
   top: 0; left: 0; right: 0;
-  background: var(--color-overlay-bg);
+  background: rgb(from var(--color-bg) r g b / var(--color-overlay-opacity));
   color: var(--color-text);
   backdrop-filter: var(--color-overlay-blur);
   border-radius: var(--radius-base) var(--radius-base) 0 0;
@@ -314,7 +336,7 @@ svg {
 .gallery-overlay-bottom {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  background: var(--color-overlay-bg);
+  background: rgb(from var(--color-bg) r g b / var(--color-overlay-opacity));
   color: var(--color-text);
   backdrop-filter: var(--color-overlay-blur);
   border-radius: 0 0 var(--radius-base) var(--radius-base);
@@ -348,7 +370,7 @@ svg {
 }
 
 .lightbox-content {
-  background: var(--color-overlay-bg);
+  background: rgb(from var(--color-bg) r g b / var(--color-overlay-opacity));
   color: var(--color-text);
   backdrop-filter: var(--color-overlay-blur);
   width: 100vw;
@@ -381,7 +403,7 @@ svg {
   padding: 0;
   transition: opacity 0.18s;
 }
-.lightbox-close:hover, .lightbox-close:focus {
+.lightbox-close:hover {
   opacity: 1;
 }
 
@@ -424,7 +446,6 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 7px;
-  font-size: var(--font-size-tag);
   box-sizing: border-box;
   position: relative;
   border-bottom: 2px solid rgba(255,255,255,0.09);
@@ -435,10 +456,9 @@ svg {
   align-items: center;
 }
 .lightbox-license {
-  font-size: var(--font-size-tag);
   display: inline-flex;
   align-items: center;
-  height: 20px;
+  height: 24px;
 }
 .cc-license-img {
   height: 20px;
@@ -446,15 +466,96 @@ svg {
   display: inline-block;
   vertical-align: middle;
 }
-.lightbox-original-link {
-  font-size: var(--font-size-tag);
-  color: var(--color-accent-soft);
-  text-decoration: underline;
+.lightbox-license-download-bar {
+  position: absolute;
+  bottom: 10px;
+  right: 18px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lightbox-download-icon {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 0;
-  margin: 0;
+  justify-content: center;
+  background: var(--color-tag-bg);
+  border-radius: 20px;
+  padding: 4px 8px; /* matches .image-tag-chip */
+  border: none;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+
+.lightbox-download-icon .icon-download {
+  stroke: #fff;
+  transition: stroke 0.18s;
+}
+
+.lightbox-download-icon:hover {
+  background: #fff;
+}
+
+.lightbox-download-icon:hover .icon-download {
+  stroke: #222;
+}
+
+/* =============================== */
+/* Filter Modal                    */
+/* =============================== */
+.filter-row {
+  margin: auto;
+  display: flex;
+  box-sizing: border-box;
+  max-width: var(--max-width-1col);
+  width: 100%;
+  justify-content: space-between;
+  padding: var(--spacing-s) 0;
+}
+
+.filter-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: var(--color-overlay-blur);
+  z-index: 1000;
+}
+
+.filter-overlay-content {
+  width: 80vw;
+  height: 80vh;
+  background: var(--color-bg);
+  border-radius: var(--radius-overlay);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.filter-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: var(--spacing-m) var(--spacing-l) var(--spacing-s) var(--spacing-l);
+}
+
+.filter-overlay-title {
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+.filter-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 24px auto 0 auto;
+  padding: 0 24px 32px 24px;
+  overflow-y: auto;
 }
 
 /* =============================== */
@@ -470,7 +571,7 @@ svg {
   justify-content: center;
 }
 .qr-inner {
-  background: var(--color-overlay-bg);
+  background: rgb(from var(--color-bg) r g b / var(--color-overlay-opacity));
   backdrop-filter: var(--color-overlay-blur);
   border-radius: var(--radius-overlay);
   padding: var(--spacing-l);
@@ -497,28 +598,14 @@ svg {
   cursor: pointer;
   margin-top: var(--spacing-m);
 }
-.qr-close:hover, .qr-close:focus {
+.qr-close:hover {
   opacity: 1;
 }
 
 /* =============================== */
 /* Shared Components & Utilities   */
 /* =============================== */
-.button {
-  background: var(--color-overlay-bg);
-  color: var(--color-text);
-  border-radius: var(--radius-tag);
-  padding: 6px 18px;
-  font-size: var(--font-size-base);
-  font-weight: 400;
-  border: 1.3px solid var(--color-accent);
-  transition: background 0.17s, color 0.17s, border 0.17s;
-}
-.button:hover, .button:focus {
-  background: var(--color-accent);
-  color: #222;
-  border-color: #fff;
-}
+
 .icon {
   display: inline-block;
   vertical-align: middle;
