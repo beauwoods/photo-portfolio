@@ -467,12 +467,12 @@ svg {
   vertical-align: middle;
 }
 .lightbox-license-download-bar {
-  position: absolute;
   bottom: 10px;
   right: 18px;
   z-index: 3;
   display: flex;
   align-items: center;
+  justify-content: right;
   gap: 8px;
 }
 
