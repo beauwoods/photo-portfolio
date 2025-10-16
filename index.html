@@ -1,75 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>meanderingwoods - Photo Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="assets/styles.css">
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WHNN13LYW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0WHNN13LYW');
+    </script>
+    <meta charset="UTF-8">
+    <title>meanderingwoods - Photo Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-<!-- Navigation Bar -->
-<nav class="top-nav">
-  <div class="nav-left">
-    <a href="https://meanderingwoods.com" class="nav-link">Blog</a>
-  </div>
-  <div class="nav-right">
-    <a href="https://instagram.com/meanderingwoods" class="nav-icon" aria-label="Instagram">
-      <!-- Instagram SVG -->
-      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 1.5h-8.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm-4.25 3.25a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5.25.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
-    </a>
-    <a href="https://www.flickr.com/photos/beauwoods/" class="nav-icon" aria-label="Flickr">
-      <!-- Flickr SVG -->
-      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="7" cy="12" r="4" /><circle cx="17" cy="12" r="4" />
-      </svg>
-    </a>
-  </div>
-</nav>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="https://meanderingwoods.com" class="nav-link">Blog</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://instagram.com/meanderingwoods" class="nav-icon" aria-label="Instagram">
+                <!-- Instagram SVG -->
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                    <path
+                        d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 1.5h-8.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm-4.25 3.25a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5.25.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                </svg>
+            </a>
+            <a href="https://www.flickr.com/photos/beauwoods/" class="nav-icon" aria-label="Flickr">
+                <!-- Flickr SVG -->
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                    <circle cx="7" cy="12" r="4" />
+                    <circle cx="17" cy="12" r="4" />
+                </svg>
+            </a>
+        </div>
+    </nav>
 
-<!-- Header Section -->
-<header class="profile-header">
-    <img src="assets/beau_headshot.jpg" alt="Beau Woods profile" class="profile-pic" id="profile-pic" tabindex="0" aria-label="Show QR code" />
+    <!-- Header Section -->
+    <header class="profile-header">
+        <img src="assets/beau_headshot.jpg" alt="Beau Woods profile" class="profile-pic" id="profile-pic" tabindex="0"
+            aria-label="Show QR code" />
 
-    <div id="qr-popup" style="
+        <div id="qr-popup" style="
     display:none; position:fixed; top:0; left:0; width:100vw; height:100vh;
     background:rgba(0,0,0,0.65); z-index:9999; justify-content:center; align-items:center;">
-    <div id="qr-inner" style="
+            <div id="qr-inner" style="
         background:#222; padding:32px 24px; border-radius:18px; box-shadow:0 4px 32px #0008; text-align:center;">
-        <img src="assets/qr.png" alt="QR code for meanderingwoods.com" width="180" height="180"/>
-    </div>
-    </div>
-  <div class="profile-info">
-    <h1>meanderingwoods</h1>
-    <p class="tagline">...dedicated to taking the scenic route.</p>
-  </div>
-  <p class="bio">
-    Beau Woods is a cybersecurity researcher and amateur photographer, capturing life one footprint at a time. To contact Beau, use your Internet sleuthing skills – I'm sure you'll figure it out. ;)
-  </p>
-</header>
+                <img src="assets/qr.png" alt="QR code for meanderingwoods.com" width="180" height="180" />
+            </div>
+        </div>
+        <div class="profile-info">
+            <h1>meanderingwoods</h1>
+            <p class="tagline">...dedicated to taking the scenic route.</p>
+        </div>
+        <p class="bio">
+            Beau Woods is a cybersecurity researcher and amateur photographer, capturing life one footprint at a time.
+            To contact Beau, use your Internet sleuthing skills – I'm sure you'll figure it out. ;)
+        </p>
+    </header>
 
-<!-- Gallery below -->
-<div class="gallery-container">
-  <div class="grid" id="grid"></div>
-</div>
-<div id="lightbox" style="display:none;"></div>
-<script src="assets/main.js"></script>
+    <!-- Gallery below -->
+    <div class="gallery-container">
+        <div class="grid" id="grid"></div>
+    </div>
+    <div id="lightbox" style="display:none;"></div>
+    <script src="assets/main.js"></script>
 
-<!-- Footer Section -->
-<footer class="site-footer">
-  <span>&copy; <a href="https://meanderingwoods.com/">meanderingwoods.com</a> 2025</span>
-  <span>Photos licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
-  <span><a href="https://github.com/meanderingwoods/photo-portfolio" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-    </svg></a>
-    <a href="https://github.com/meanderingwoods/photo-portfolio" target="_blank">Source on GitHub</a>
-  </span>
-</footer>
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <span>&copy; <a href="https://meanderingwoods.com/">meanderingwoods.com</a> 2025</span>
+        <span>Photos licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC
+                BY-NC-SA 4.0</a></span>
+        <span><a href="https://github.com/meanderingwoods/photo-portfolio" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+                </svg></a>
+            <a href="https://github.com/meanderingwoods/photo-portfolio" target="_blank">Source on GitHub</a>
+        </span>
+    </footer>
 
 </body>
+
 </html>
