@@ -21,6 +21,12 @@ PHOTO_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.tiff'}
 DEFAULT_IMAGE_DIR = "images"
 DEFAULT_JSON_PATH = "images.json"
 DEFAULT_GPX_DIR = "GPX_Output"
+DEFAULT_THUMBS_DIR = "thumbs"
+
+THUMB_SIZES = [
+    ("320", 320),      # Gallery thumbnail
+    ("1600", 1600)     # Lightbox thumbnail
+]
 
 def norm_path(p):
     p = os.path.normpath(p)
@@ -280,7 +286,53 @@ def build_image_entry(path, title="", tags=None, added="", taken="", original_li
         "height": height
     }
 
+# --------- THUMBNAIL GENERATION FUNCTIONALITY ---------
+def ensure_dir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def thumb_path(img_path, size):
+    filename = os.path.splitext(os.path.basename(img_path))[0]
+    return os.path.join(DEFAULT_THUMBS_DIR, f"{filename}_{size}.webp")
+
+def generate_thumbnail(src_path, dest_path, max_width):
+    try:
+        with Image.open(src_path) as img:
+            w, h = img.size
+            if w > max_width:
+                new_h = int(h * max_width / w)
+                img = img.resize((max_width, new_h), Image.LANCZOS)
+            img.save(dest_path, "WEBP", quality=85)
+    except Exception as e:
+        print(f"Error generating thumbnail for {src_path}: {e}")
+
+def generate_thumbnails_for_all(images_dir=DEFAULT_IMAGE_DIR, thumbs_dir=DEFAULT_THUMBS_DIR, sizes=THUMB_SIZES, debug=False):
+    ensure_dir(thumbs_dir)
+    count = 0
+    for root, dirs, files in os.walk(images_dir):
+        for file in files:
+            ext = os.path.splitext(file)[1].lower()
+            if ext in PHOTO_EXTENSIONS:
+                src_path = os.path.join(root, file)
+                for size, max_width in sizes:
+                    dest_path = thumb_path(src_path, size)
+                    if not os.path.exists(dest_path):
+                        generate_thumbnail(src_path, dest_path, max_width)
+                        count += 1
+                        if debug:
+                            print(f"Generated thumbnail: {dest_path}")
+                    else:
+                        if debug:
+                            print(f"Thumbnail already exists: {dest_path}")
+    print(f"Thumbnail generation complete. {count} new thumbnails created.")
+
+# ------------ END THUMBNAIL GENERATION ----------------
+
 def integrate_index_and_geotag(gpx_dir, img_dir, json_path, test_mode=False, debug=False, window_seconds=3600, force=False, prune=False):
+    # Generate thumbnails first
+    print("Generating thumbnails before indexing...")
+    generate_thumbnails_for_all(images_dir=img_dir, debug=debug)
+    # ... remainder unchanged ...
     if os.path.exists(json_path):
         with open(json_path, "r", encoding="utf-8") as f:
             data = json.load(f)

@@ -51,7 +51,7 @@ function createLicense(licenseUrl) {
   return `<a href="${licenseUrl}" target="_blank" class="lightbox-license" title="CC BY-NC-SA 4.0">${THEME.licenseIcon}</a>`;
 }
 function createDownloadButton(imgObj) {
-  return `<a href="${imgObj.path}" download class="lightbox-download-icon" title="Download image">
+  return `<a href="${imgObj.original_path}" download class="lightbox-download-icon" title="Download image">
     ${THEME.downloadIcon}
   </a>`;
 }
@@ -71,57 +71,119 @@ function getPlatformFromUrl(url) {
   // Add more platforms as needed
   return "generic";
 }
+function trackEvent({action, category, label, value}) {
+  if (window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value
+    });
+  }
+}
+
+// ===============================
+// Infinite Scroll State
+// ===============================
+let imagesData = [];
+let imagesLoadedCount = 0;
+const IMAGES_BATCH_SIZE = 20;
+let msnry;
 
 // ===============================
 // Masonry Grid & Gallery Rendering
 // ===============================
+function getThumbPath(imgObj, size) {
+  // Assume original_path is images/{filename}
+  const filename = imgObj.original_path.split('/').pop().replace(/\.[^/.]+$/, "");
+  return `thumbs/${filename}_${size}.webp`;
+}
+
 function renderGalleryImage(imgObj) {
   const div = document.createElement('div');
   div.className = 'grid-item';
   div.tabIndex = 0;
 
   const imageElem = document.createElement('img');
-  imageElem.src = imgObj.path;
+  imageElem.src = getThumbPath(imgObj, 320);
   imageElem.alt = getImageDisplayTitle(imgObj);
+  imageElem.loading = 'lazy';
 
   if (imgObj.width && imgObj.height) {
     imageElem.width = imgObj.width;
     imageElem.height = imgObj.height;
     imageElem.setAttribute('width', imgObj.width);
     imageElem.setAttribute('height', imgObj.height);
-    imageElem.loading = 'lazy'; // Enable native lazy loading
-    div.style.aspectRatio = `${imgObj.width}/${imgObj.height}`; // Optional
+    div.style.aspectRatio = `${imgObj.width}/${imgObj.height}`;
   }
 
   div.appendChild(imageElem);
   div.appendChild(renderOverlayTop('gallery', imgObj));
   div.appendChild(renderOverlayBottom('gallery', imgObj));
 
-  div.onclick = () => showLightbox(imgObj);
+  div.onclick = () => {
+    trackEvent({
+      action: 'click_image',
+      category: 'Gallery',
+      label: imgObj.title || imgObj.original_path
+    });
+    showLightbox(imgObj);
+  };
   div.onkeydown = (e) => {
-    if (e.key === "Enter" || e.key === " ") showLightbox(imgObj);
+    if (e.key === "Enter" || e.key === " ") {
+      trackEvent({
+        action: 'keyboard_open_image',
+        category: 'Gallery',
+        label: imgObj.title || imgObj.original_path
+      });
+      showLightbox(imgObj);
+    }
   };
 
   return div;
 }
 
-function initMasonryGrid(images) {
+function initMasonryGrid() {
   const grid = document.getElementById('grid');
-  var msnry = new Masonry(grid, {
+  msnry = new Masonry(grid, {
     itemSelector: '.grid-item',
     columnWidth: 320,
     gutter: 32,
     fitWidth: true
   });
+}
 
-  images.forEach((img) => {
+function loadNextBatch() {
+  const grid = document.getElementById('grid');
+  const nextImages = imagesData.slice(imagesLoadedCount, imagesLoadedCount + IMAGES_BATCH_SIZE);
+  let newDivs = [];
+  nextImages.forEach((img) => {
     const div = renderGalleryImage(img);
     grid.appendChild(div);
-    imagesLoaded(div).on('progress', function() {
-      msnry.appended(div);
+    newDivs.push(div);
+  });
+  imagesLoadedCount += nextImages.length;
+
+  // Only initialize Masonry after first batch is loaded
+  if (!msnry) {
+    imagesLoaded(grid, function() {
+      initMasonryGrid();
+      msnry.appended(newDivs);
       msnry.layout();
     });
-  });
+  } else {
+    imagesLoaded(newDivs, function() {
+      msnry.appended(newDivs);
+      msnry.layout();
+    });
+  }
+}
+
+function handleScroll() {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+    if (imagesLoadedCount < imagesData.length) {
+      loadNextBatch();
+    }
+  }
 }
 
 // ===============================
@@ -161,7 +223,7 @@ function showLightbox(imgObj) {
         <div class="lightbox-content">
           <button class="lightbox-close" id="lightbox-close" title="Close">&times;</button>
           ${renderOverlayTop('lightbox', imgObj).outerHTML}
-          <img class="lightbox-img" src="${imgObj.path}" alt="${getImageDisplayTitle(imgObj)}">
+          <img class="lightbox-img" src="${getThumbPath(imgObj, 1600)}" alt="${getImageDisplayTitle(imgObj)}">
           ${renderOverlayBottom('lightbox', imgObj).outerHTML}
           <div class="lightbox-scroll-cue"></div>
         </div>
@@ -173,6 +235,11 @@ function showLightbox(imgObj) {
   attachLightboxEventListeners();
 }
 function closeLightbox() {
+  trackEvent({
+    action: 'close_lightbox',
+    category: 'Lightbox',
+    label: ''
+  });
   document.getElementById('lightbox').style.display = 'none';
   document.body.style.overflow = '';
   document.removeEventListener('keydown', onLightboxKey);
@@ -192,12 +259,23 @@ function attachLightboxEventListeners() {
 // QR Code Popup / Modal
 // ===============================
 function showQRModal() {
+  trackEvent({
+    action: 'open_qr_modal',
+    category: 'QR Modal',
+    label: ''
+  });
   const qrPopup = document.getElementById('qr-popup');
   qrPopup.style.display = 'flex';
   attachQRModalEventListeners();
 }
 function closeQRModal() {
+  trackEvent({
+    action: 'close_qr_modal',
+    category: 'QR Modal',
+    label: ''
+  });
   document.getElementById('qr-popup').style.display = 'none';
+  document.removeEventListener('keydown', onQRModalKey);
 }
 function onQRModalKey(e) {
   if (e.key === "Escape") closeQRModal();
@@ -218,6 +296,9 @@ function setupGlobalEventListeners() {
   profilePic.onkeydown = (e) => {
     if (e.key === "Enter" || e.key === " ") showQRModal();
   };
+
+  // Infinite scroll for gallery
+  window.addEventListener('scroll', handleScroll);
 }
 
 // ===============================
@@ -227,8 +308,12 @@ function initPortfolioApp() {
   fetch('images.json')
     .then(response => response.json())
     .then(data => {
-      const images = Array.isArray(data) ? data : data.images;
-      initMasonryGrid(images);
+      // For each image, ensure original_path is set
+      imagesData = Array.isArray(data)
+        ? data.map(img => ({ ...img, original_path: img.path })) // fallback for legacy
+        : data.images.map(img => ({ ...img, original_path: img.path }));
+      initMasonryGrid();
+      loadNextBatch(); // Load first batch
     })
     .catch(err => {
       document.getElementById('grid').innerHTML = '<p style="color:red;text-align:center;">Could not load images.json.</p>';
