@@ -1,151 +1,86 @@
-# Photo Portfolio
+# MeanderingWoods Photo Portfolio
 
-A beautiful, responsive photo portfolio website with masonry layout, infinite scroll, and lightbox functionality. Hosted on GitHub Pages.
+A modern, responsive, and filterable photo portfolio powered by HTML, CSS, and vanilla JavaScript.
 
 ## Features
 
-- **Masonry Layout**: Beautiful grid layout that adapts to different image sizes
-- **Infinite Scroll**: Images load progressively as you scroll down
-- **Lightbox**: Click any image to view it in full size with navigation
-- **Dark Theme**: Modern dark theme with rounded corners
-- **Responsive Design**: Adapts from 1 to 4 columns based on screen size
-  - 1 column on mobile (< 480px)
-  - 2 columns on small tablets (480px - 767px)
-  - 3 columns on tablets (768px - 1199px)
-  - 4 columns on desktop (≥ 1200px)
-- **Auto-Generated Metadata**: GitHub Action automatically generates images.json when you add photos
-- **Metadata Preservation**: Manual edits to image titles and tags are preserved during regeneration
+- **Responsive grid gallery** using Masonry layout for optimal photo arrangement.
+- **Image overlays** display title, date, location, and tags on hover/focus.
+- **Lightbox modal** for viewing images in detail with metadata, download/source links, and licensing info.
+- **Advanced filtering:**  
+  - Filter images by **date**, **place**, and **tags** with a modal overlay.
+  - **Multi-category filtering**: combine date, place, and tag filters using an AND logic across categories, OR logic within each.
+  - **Clear** selected filters per category or **Clear All** filters at once.
+- **Profile header** with avatar, tagline, and a QR code popup modal for easy sharing.
+- **Accessible navigation** and semantic markup.
+- **CC BY-NC-SA 4.0 license** for all images.
 
 ## Quick Start
 
-1. **Add Your Photos**: Upload your images to the `images/` folder
-2. **Run the Script**: The GitHub Action will automatically generate `images.json` when you push to main
-3. **Deploy**: Enable GitHub Pages in your repository settings (Settings → Pages → Source: main branch)
-4. **Visit**: Your portfolio will be live at `https://[username].github.io/photo-portfolio/`
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/beauwoods/photo-portfolio.git
+   cd photo-portfolio
+   ```
 
-## Manual Setup
+2. **Add your images and data:**
+   - Place image files in the appropriate directory (see `images.json` for structure).
+   - Update `images.json` with your photo metadata (title, path, tags, date, location, etc).
 
-If you want to generate `images.json` locally:
+3. **Preview locally:**
+   Open `index.html` in your web browser. No build step or server required.
 
-```bash
-python generate-images-json.py
-```
-
-This will:
-- Scan the `images/` folder for image files
-- Generate `images.json` with metadata
-- Preserve any manual edits you've made to titles and tags
-
-## Customizing Image Metadata
-
-Edit `images.json` to add custom titles and tags:
-
-```json
-{
-  "images": [
-    {
-      "path": "images/photo1.jpg",
-      "title": "Beautiful Sunset",
-      "tags": ["nature", "sunset", "landscape"],
-      "added": "2025-10-12T10:30:00Z"
-    },
-    {
-      "path": "images/photo2.jpg",
-      "title": "City Lights",
-      "tags": ["urban", "night", "cityscape"],
-      "added": "2025-10-12T10:35:00Z"
-    }
-  ]
-}
-```
-
-Your custom titles and tags will be preserved when new images are added. The `added` field is automatically generated with an ISO 8601 timestamp when new images are detected.
-
-## Testing
-
-Run the test suite to verify the image generation script:
-
-```bash
-python test-generate-images-json.py
-```
-
-## File Structure
+## Project Structure
 
 ```
-photo-portfolio/
-├── index.html                      # Main portfolio page
-├── images.json                     # Image metadata (auto-generated)
-├── generate-images-json.py         # Script to generate images.json
-├── test-generate-images-json.py    # Test suite for the generator
-├── images/                         # Your photos go here
-│   ├── photo1.jpg
-│   ├── photo2.jpg
-│   └── ...
-└── .github/
-    └── workflows/
-        └── generate-images-json.yml  # GitHub Action workflow
+.
+├── index.html
+├── assets/
+│   ├── styles.css         # Styles for layout, overlays, lightbox, and filter modal
+│   ├── main.js            # All gallery, overlay, lightbox, and filtering logic
+│   ├── beau_headshot.jpg  # Profile avatar
+│   ├── qr.png             # QR code for sharing
+│   └── ...                # Other static assets (icons, etc)
+├── images.json            # Your photo data (not included in this repo)
+└── README.md
 ```
 
-## Supported Image Formats
+## Key Components
 
-- JPEG (.jpg, .jpeg)
-- PNG (.png)
-- GIF (.gif)
-- WebP (.webp)
-- BMP (.bmp)
-- SVG (.svg)
+- **index.html:**  
+  - Loads the navigation, profile header, filter row, gallery grid, filter overlay modal, and lightbox modal.
+- **assets/styles.css:**  
+  - Theme variables, responsive layout, overlay and modal styles, custom chip designs for tags/places/dates.
+- **assets/main.js:**  
+  - Image grid rendering using Masonry and imagesLoaded.
+  - Overlay rendering for each image.
+  - Lightbox modal logic and event handling.
+  - QR code popup logic.
+  - **Filter logic:** Extracts unique tags, dates, and places from `images.json`, manages selected filters, and updates the grid accordingly.
 
-## GitHub Action
+## Filtering & Overlay Details
 
-The included GitHub Action (`generate-images-json.yml`) automatically:
-1. Triggers when files are added/modified in the `images/` folder
-2. Runs `generate-images-json.py` to update `images.json`
-3. Preserves your manual edits to titles and tags
-4. Commits and pushes the updated `images.json`
+- **Filter Row:**  
+  - Three filter chips: Dates, Places, Tags. Click to open a modal overlay.
+- **Filter Modal Overlay:**  
+  - Shows all available chips for the chosen category (dynamically generated from your data).
+  - Select chips to filter; you can combine filters across categories.
+  - "Clear" button resets current filter category; "Clear All" resets all filters.
+- **Gallery Overlays:**  
+  - On each image, overlays show the title on top and date/location/tags below.
+- **Lightbox Modal:**  
+  - Click an image to see it fullscreen with all metadata, download/source options, and licensing.
 
-You can also manually trigger it from the Actions tab.
+## Accessibility & Responsive Design
 
-## Browser Support
-
-Works on all modern browsers:
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers
-
-## Keyboard Shortcuts (Lightbox)
-
-- `←` / `→`: Navigate between images
-- `Esc`: Close lightbox
-
-## TO DO
-
-### Phase 1: Header Redesign
-- [ ] Research minimalist headers for inspiration
-- [ ] Decide on new header elements (layout, typography, accent, etc)
-- [ ] Implement improved header
-
-### Phase 2: Info Overlays & Lightbox
-- [ ] Research gallery/lightbox overlay designs
-- [ ] Redesign gallery info overlays
-- [ ] Revamp lightbox info display
-
-### Phase 3: Tag Filtering
-- [ ] Explore filtering UI styles (tag cloud, sidebar, etc)
-- [ ] Design tag filter component
-- [ ] Implement tag-based filtering
-
----
-
-*Each phase should be tracked as a GitHub issue for discussion and implementation:*
-- [Phase 1: Header Redesign](https://github.com/beauwoods/photo-portfolio/issues/4)
-- [Phase 2: Info Overlay & Lightbox Revamp](https://github.com/beauwoods/photo-portfolio/issues/5)
-- [Phase 3: Tag Filtering UX](https://github.com/beauwoods/photo-portfolio/issues/6)
-
-## Technology
-
-Built with plain HTML, CSS, and JavaScript - no frameworks or dependencies required!
+- Focus indicators and accessible modal dialogs.
+- Keyboard navigation for overlays and filter chips.
+- Scales elegantly from mobile to desktop.
 
 ## License
 
-MIT License - feel free to use this for your own portfolio!
+All photos are © [meanderingwoods.com](https://meanderingwoods.com/) and licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+---
+
+**Made with ❤️ by [Beau Woods](https://meanderingwoods.com/).**
