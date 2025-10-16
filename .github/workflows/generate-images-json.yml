@@ -34,7 +34,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install Pillow geopy
+        run: pip install Pillow geopy piexif gpxpy pandas
 
       - name: Generate images.json
         run: |
