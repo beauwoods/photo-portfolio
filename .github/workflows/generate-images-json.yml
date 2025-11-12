@@ -57,7 +57,7 @@ jobs:
                 sys.exit(1)
             else:
                 print("All referenced thumbnails are present.")
-PY
+          PY
 
       - name: Check for changes
         id: check_changes
