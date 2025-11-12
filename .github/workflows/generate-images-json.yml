@@ -6,13 +6,13 @@ on:
       - main
     # Only trigger on new/changed photograph files in images/
     paths:
-      - 'images/**/*.jpg'
-      - 'images/**/*.jpeg'
-      - 'images/**/*.png'
-      - 'images/**/*.gif'
-      - 'images/**/*.webp'
-      - 'images/**/*.bmp'
-      - 'images/**/*.tiff'
+      - 'images/**/*.[jJ][pP][gG]'
+      - 'images/**/*.[jJ][pP][eE][gG]'
+      - 'images/**/*.[pP][nN][gG]'
+      - 'images/**/*.[gG][iI][fF]'
+      - 'images/**/*.[wW][eE][bB][pP]'
+      - 'images/**/*.[bB][mM][pP]'
+      - 'images/**/*.[tT][iI][fF][fF]'
   workflow_dispatch:
 
 permissions:
@@ -40,16 +40,48 @@ jobs:
         run: |
           python index_and_enrich.py
 
+      - name: Verify thumbnails exist
+        run: |
+          python - <<'PY'
+import json
+import os
+import sys
+
+with open("images.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+images = data["images"] if isinstance(data, dict) else data
+missing = []
+for img in images:
+    base = os.path.splitext(os.path.basename(img["path"]))[0]
+    for size in ("320", "1600"):
+        thumb_path = os.path.join("thumbs", f"{base}_{size}.webp")
+        if not os.path.exists(thumb_path):
+            missing.append(thumb_path)
+
+if missing:
+    print("Missing thumbnails detected:")
+    for path in missing:
+        print(f" - {path}")
+    sys.exit(1)
+else:
+    print("All referenced thumbnails are present.")
+PY
+
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --exit-code images.json || echo "changed=true" >> $GITHUB_OUTPUT
+          if [[ -z "$(git status --short -- images.json thumbs)" ]]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Commit and push changes
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add images.json
-          git commit -m "Auto-generate images.json from images/ directory"
+          git add images.json thumbs
+          git commit -m "Auto-generate images.json and thumbnails"
           git push
