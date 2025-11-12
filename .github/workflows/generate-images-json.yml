@@ -34,30 +34,30 @@ jobs:
       - name: Verify thumbnails exist
         run: |
           python - <<'PY'
-            import json
-            import os
-            import sys
+import json
+import os
+import sys
 
-            with open("images.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
+with open("images.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
 
-            images = data["images"] if isinstance(data, dict) else data
-            missing = []
-            for img in images:
-                base = os.path.splitext(os.path.basename(img["path"]))[0]
-                for size in ("320", "1600"):
-                    thumb_path = os.path.join("thumbs", f"{base}_{size}.webp")
-                    if not os.path.exists(thumb_path):
-                        missing.append(thumb_path)
+images = data["images"] if isinstance(data, dict) else data
+missing = []
+for img in images:
+    base = os.path.splitext(os.path.basename(img["path"]))[0]
+    for size in ("320", "1600"):
+        thumb_path = os.path.join("thumbs", f"{base}_{size}.webp")
+        if not os.path.exists(thumb_path):
+            missing.append(thumb_path)
 
-            if missing:
-                print("Missing thumbnails detected:")
-                for path in missing:
-                    print(f" - {path}")
-                sys.exit(1)
-            else:
-                print("All referenced thumbnails are present.")
-          PY
+if missing:
+    print("Missing thumbnails detected:")
+    for path in missing:
+        print(f" - {path}")
+    sys.exit(1)
+else:
+    print("All referenced thumbnails are present.")
+PY
 
       - name: Check for changes
         id: check_changes
